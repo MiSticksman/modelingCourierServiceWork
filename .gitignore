@@ -13,6 +13,11 @@ target/
 .springBeans
 .sts4-cache
 
+### пока что без докера ###
+src/main/docker
+
+
+
 ### IntelliJ IDEA ###
 .idea
 .mvn

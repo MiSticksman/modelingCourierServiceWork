@@ -10,17 +10,28 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table
+@Table(name = "bids")
 public class Bid {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer bidId;
 
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "navigator_id")
+    private Navigator navigator;
+
+    private Integer urgency; // срочность
+
+    public Bid(Navigator nav, Integer urgency) {
+        this.navigator = nav;
+        this.urgency = urgency;
+    }
+
     @ManyToOne()
     @JoinColumn(name = "courier_id")
     private Courier courier;
 
-    @OneToMany(mappedBy = "bid")
-    private List<Branch> branches;
+
 }
