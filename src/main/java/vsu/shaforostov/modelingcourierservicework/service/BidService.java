@@ -48,5 +48,9 @@ public class BidService {
         bidRepository.save(bid);
     }
 
+    public void delete(Integer id) {
+        bidRepository.deleteById(id);
+    }
+
 
 }

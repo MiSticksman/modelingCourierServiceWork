@@ -40,4 +40,8 @@ public class CourierService {
         courierRepository.save(courier);
     }
 
+    public void delete(Integer id) {
+        courierRepository.deleteById(id);
+    }
+
 }

@@ -42,4 +42,9 @@ public class BranchService {
         Branch branch = branchMapper.mapToBranchEntity(branchDto);
         branchRepository.save(branch);
     }
+
+
+    public void delete(Integer id) {
+        branchRepository.deleteById(id);
+    }
 }

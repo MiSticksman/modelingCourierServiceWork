@@ -39,4 +39,8 @@ public class NavigatorService {
         navigatorRepository.save(navigator);
     }
 
+    public void delete(Integer id) {
+        navigatorRepository.deleteById(id);
+    }
+
 }
