@@ -1,11 +1,11 @@
 package vsu.shaforostov.modelingcourierservicework.mapper;
 
 
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 import vsu.shaforostov.modelingcourierservicework.dto.BranchDto;
 import vsu.shaforostov.modelingcourierservicework.entity.Branch;
 
-@Controller
+@Component
 public class BranchMapper {
     public BranchDto mapToBranchDto(Branch branch) {
         BranchDto branchDto = new BranchDto();
