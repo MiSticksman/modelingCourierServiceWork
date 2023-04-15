@@ -1,11 +1,9 @@
 package vsu.shaforostov.modelingcourierservicework.controller;
 
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import vsu.shaforostov.modelingcourierservicework.dto.NavigatorDto;
-import vsu.shaforostov.modelingcourierservicework.entity.Navigator;
+import vsu.shaforostov.modelingcourierservicework.dto.NavigatorDto.NavigatorDtoCreate;
 import vsu.shaforostov.modelingcourierservicework.service.NavigatorService;
 
 import java.util.List;
@@ -19,18 +17,18 @@ public class NavigatorController {
 
 
     @GetMapping
-    public List<NavigatorDto> getNavigators() {
+    public List<NavigatorDtoCreate> getNavigators() {
         return navigatorService.findAll();
     }
 
     @GetMapping("/{id}")
-    public NavigatorDto getNavigatorById(@PathVariable(name="id") Integer id) {
+    public NavigatorDtoCreate getNavigatorById(@PathVariable(name="id") Integer id) {
         return navigatorService.findById(id);
     }
 
     @PostMapping
-    public void saveNavigator(NavigatorDto navigatorDto) {
-        navigatorService.save(navigatorDto);
+    public void saveNavigator(@RequestBody NavigatorDtoCreate navigatorDtoCreate) {
+        navigatorService.save(navigatorDtoCreate);
     }
 
     @DeleteMapping("/{id}")

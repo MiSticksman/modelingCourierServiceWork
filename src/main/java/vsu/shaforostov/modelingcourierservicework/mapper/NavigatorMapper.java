@@ -1,29 +1,30 @@
 package vsu.shaforostov.modelingcourierservicework.mapper;
 
 import org.springframework.stereotype.Component;
-import vsu.shaforostov.modelingcourierservicework.dto.NavigatorDto;
+import vsu.shaforostov.modelingcourierservicework.dto.NavigatorDto.NavigatorDtoCreate;
+import vsu.shaforostov.modelingcourierservicework.entity.Branch;
 import vsu.shaforostov.modelingcourierservicework.entity.Navigator;
 
 
 @Component
 public class NavigatorMapper {
 
-    public Navigator mapToNavigatorEntity(NavigatorDto navigatorDto) {
+    public Navigator mapToNavigatorEntity(NavigatorDtoCreate navigatorDtoCreate, Branch from, Branch to) {
         Navigator navigator = new Navigator();
-        navigator.setNavigatorId(navigatorDto.getNavigatorId());
-        navigator.setTimeFromTo(navigatorDto.getTimeFromTo());
-        navigator.setFrom(navigatorDto.getFrom());
-        navigator.setTo(navigatorDto.getTo());
+        navigator.setNavigatorId(navigatorDtoCreate.getId());
+        navigator.setTimeFromTo(navigatorDtoCreate.getTimeFromTo());
+        navigator.setFrom(from);
+        navigator.setTo(to);
         return navigator;
     }
 
-    public NavigatorDto mapToNavigatorDto(Navigator navigator) {
-        NavigatorDto navigatorDto = new NavigatorDto();
-        navigatorDto.setNavigatorId(navigator.getNavigatorId());
-        navigatorDto.setTimeFromTo(navigator.getTimeFromTo());
-        navigatorDto.setFrom(navigator.getFrom());
-        navigator.setTo(navigator.getTo());
-        return navigatorDto;
+    public NavigatorDtoCreate mapToNavigatorDto(Navigator navigator) {
+        NavigatorDtoCreate navigatorDtoCreate = new NavigatorDtoCreate();
+        navigatorDtoCreate.setId(navigator.getNavigatorId());
+        navigatorDtoCreate.setTimeFromTo(navigator.getTimeFromTo());
+        navigatorDtoCreate.setFromId(navigator.getFrom().getBranchId());
+        navigatorDtoCreate.setToId(navigator.getTo().getBranchId());
+        return navigatorDtoCreate;
     }
 
 }

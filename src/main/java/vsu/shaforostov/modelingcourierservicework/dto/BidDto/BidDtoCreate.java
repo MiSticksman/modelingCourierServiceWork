@@ -1,21 +1,19 @@
-package vsu.shaforostov.modelingcourierservicework.dto;
+package vsu.shaforostov.modelingcourierservicework.dto.BidDto;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import vsu.shaforostov.modelingcourierservicework.entity.Bid;
-
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CourierDto {
+public class BidDtoCreate {
 
+    private Integer id;
+    private Integer navigatorId;
     private Integer courierId;
-    private List<Bid> bids;
-
+    private Integer  urgency;
 }

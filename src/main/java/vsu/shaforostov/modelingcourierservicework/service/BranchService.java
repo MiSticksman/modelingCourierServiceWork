@@ -2,7 +2,7 @@ package vsu.shaforostov.modelingcourierservicework.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import vsu.shaforostov.modelingcourierservicework.dto.BranchDto;
+import vsu.shaforostov.modelingcourierservicework.dto.BranchDto.BranchDtoCreate;
 import vsu.shaforostov.modelingcourierservicework.entity.Branch;
 import vsu.shaforostov.modelingcourierservicework.mapper.BranchMapper;
 import vsu.shaforostov.modelingcourierservicework.repository.BranchRepository;
@@ -17,29 +17,32 @@ public class BranchService {
     private final BranchRepository branchRepository;
     private final BranchMapper branchMapper;
 
-    public List<BranchDto> findAll() {
-        List<BranchDto> list = new ArrayList<>();
+    public List<BranchDtoCreate> findAll() {
+        List<BranchDtoCreate> list = new ArrayList<>();
         branchRepository.findAll().forEach(branch -> {
             list.add(branchMapper.mapToBranchDto(branch));
         });
         return list;
     }
 
-    public BranchDto findById(Integer id) {
-        Branch branch = branchRepository.findById(id)
+    public Branch findEntityById(Integer id) {
+        return branchRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("can't find by id"));
-        return branchMapper.mapToBranchDto(branch);
     }
-    public void saveAll(List<BranchDto> branchDtos) {
+
+    public BranchDtoCreate findById(Integer id) {
+        return branchMapper.mapToBranchDto(findEntityById(id));
+    }
+    public void saveAll(List<BranchDtoCreate> branchDtoCreates) {
         List<Branch> branches = new ArrayList<>();
-        branchDtos.forEach(branchDto -> {
-            branches.add(branchMapper.mapToBranchEntity(branchDto));
+        branchDtoCreates.forEach(branchDtoCreate -> {
+            branches.add(branchMapper.mapToBranchEntity(branchDtoCreate));
         });
         branchRepository.saveAll(branches);
     }
 
-    public void save(BranchDto branchDto) {
-        Branch branch = branchMapper.mapToBranchEntity(branchDto);
+    public void save(BranchDtoCreate branchDtoCreate) {
+        Branch branch = branchMapper.mapToBranchEntity(branchDtoCreate);
         branchRepository.save(branch);
     }
 

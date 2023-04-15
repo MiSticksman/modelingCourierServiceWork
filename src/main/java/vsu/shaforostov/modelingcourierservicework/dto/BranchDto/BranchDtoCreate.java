@@ -1,4 +1,4 @@
-package vsu.shaforostov.modelingcourierservicework.dto;
+package vsu.shaforostov.modelingcourierservicework.dto.BranchDto;
 
 
 import lombok.AllArgsConstructor;
@@ -10,8 +10,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BranchDto {
+public class BranchDtoCreate {
 
-    private Integer branchId;
+    private Integer id;
     private String name;
 }

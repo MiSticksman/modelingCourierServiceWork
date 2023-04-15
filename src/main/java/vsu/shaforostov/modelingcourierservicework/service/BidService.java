@@ -2,10 +2,11 @@ package vsu.shaforostov.modelingcourierservicework.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import vsu.shaforostov.modelingcourierservicework.dto.BidDto;
-import vsu.shaforostov.modelingcourierservicework.dto.BranchDto;
+import vsu.shaforostov.modelingcourierservicework.dto.BidDto.BidDtoCreate;
+import vsu.shaforostov.modelingcourierservicework.dto.BidDto.BidDtoResponse;
 import vsu.shaforostov.modelingcourierservicework.entity.Bid;
-import vsu.shaforostov.modelingcourierservicework.entity.Branch;
+import vsu.shaforostov.modelingcourierservicework.entity.Courier;
+import vsu.shaforostov.modelingcourierservicework.entity.Navigator;
 import vsu.shaforostov.modelingcourierservicework.mapper.BidMapper;
 import vsu.shaforostov.modelingcourierservicework.repository.BidRepository;
 
@@ -21,36 +22,43 @@ public class BidService {
     private final BidRepository bidRepository;
     private final BidMapper bidMapper;
 
+    private final NavigatorService navigatorService;
 
-    public List<BidDto> findAll() {
-        List<BidDto> list = new ArrayList<>();
+    private final CourierService courierService;
+
+    public List<BidDtoResponse> findAll() {
+        List<BidDtoResponse> list = new ArrayList<>();
         bidRepository.findAll().forEach(bid -> {
-            list.add(bidMapper.mapToBidDto(bid));
+            list.add(bidMapper.mapToBidDtoResponse(bid));
         });
         return list;
     }
 
-    public BidDto findById(Integer id) {
-        Bid bid = bidRepository.findById(id)
+
+    public Bid findEntityById(Integer id) {
+        return bidRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("can't find by id"));
-        return bidMapper.mapToBidDto(bid);
     }
-    public void saveAll(List<BidDto> bidDtos) {
-        List<Bid> bids = new ArrayList<>();
-        bidDtos.forEach(bidDto -> {
-            bids.add(bidMapper.mapToBidEntity(bidDto));
-        });
-        bidRepository.saveAll(bids);
+    public BidDtoCreate findById(Integer id) {
+        return bidMapper.mapToBidDto(findEntityById(id));
     }
 
-    public void save(BidDto bidDto) {
-        Bid bid = bidMapper.mapToBidEntity(bidDto);
+//    public void saveAll(List<BidDtoCreate> bidDtoCreates) {
+//        List<Bid> bids = new ArrayList<>();
+//        bidDtoCreates.forEach(bidDtoCreate -> {
+//            bids.add(bidMapper.mapToBidEntity(bidDtoCreate));
+//        });
+//        bidRepository.saveAll(bids);
+//    }
+
+    public void save(BidDtoCreate bidDtoCreate) {
+        Navigator navigator = navigatorService.findEntityById(bidDtoCreate.getNavigatorId());
+        Courier courier = courierService.findEntityById(bidDtoCreate.getCourierId());
+        Bid bid = bidMapper.mapToBidEntity(bidDtoCreate, navigator, courier);
         bidRepository.save(bid);
     }
 
     public void delete(Integer id) {
         bidRepository.deleteById(id);
     }
-
-
 }

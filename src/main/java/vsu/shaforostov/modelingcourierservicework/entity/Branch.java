@@ -1,6 +1,7 @@
 package vsu.shaforostov.modelingcourierservicework.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -19,6 +20,7 @@ public class Branch {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer branchId;
 
+    @NonNull
     private String name;
 
     public Branch(Integer id, String name) {
